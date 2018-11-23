@@ -1,3 +1,13 @@
-.footer{
-    
+.footer {
+  p {
+    color: var(--mo-grey);
+  }
+  a {
+    color: var(--mo-grey);
+    text-decoration: underline;
+    &:hover{
+        color: var(--mo-indigo);
+    }
+  }
 }
+
