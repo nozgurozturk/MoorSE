@@ -46,9 +46,6 @@ class Translator extends Component {
   };
 
   render() {
-    console.log(this.state.codes);
-    console.log(this.state.waveform);
-    console.log(this.state.bpm);
     return (
       <div>
         <Inputs
