@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
-import paper from "paper";
 
 class MorseOutput extends Component {
-    
+
 render(){
     return(
         <div className="outputs">

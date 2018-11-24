@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import UIkit from "uikit";
-import chars from "../api/chars.json";
 
 class Inputs extends Component {
   componentDidMount() {
@@ -10,18 +9,38 @@ class Inputs extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { value: "" };
+    this.state = { textIn: "", bpmIn: "", waveformIn: "" };
+    this.baseState = this.state 
+  }
+  resetStates = () =>{
+    this.setState(this.baseState);
   }
 
-  onTextChange = e =>  {
-    this.setState({ value: e.target.value });
-  }
-
-  onTextSubmit = e => {
+  onBpmChange = e => {
+    this.setState({ bpmIn: e.target.value });
+  };
+  onWaveformChange = e => {
+    this.setState({ waveformIn: e.target.value });
+  };
+  onTextChange = e => {
+    this.setState({ textIn: e.target.value });
+  };
+  onTextSubmit = () => {
+    this.props.onText(this.state.textIn);
+  };
+  onBpmSubmit = () => {
+    this.props.onBpm(this.state.bpmIn);
+  };
+  onWaveformSubmit = () => {
+    this.props.onWaveform(this.state.waveformIn);
+  };
+  onInputSubmit = (e) =>{
     e.preventDefault();
-
-    this.props.onSubmit(this.state.value);
+    this.onBpmSubmit();
+    this.onWaveformSubmit();
+    this.onTextSubmit();
   }
+
 
   render() {
     return (
@@ -30,11 +49,11 @@ class Inputs extends Component {
           <div data-uk-grid>
             <div className="uk-width-3-4@s text-area">
               <h4 className="uk-text-right@m">text</h4>
-              <form onSubmit={this.onTextSubmit}>
+              <form>
                 <label>
                   <textarea
                     className="uk-height-medium uk-textarea"
-                    value={this.state.value}
+                    value={this.state.textIn}
                     onChange={this.onTextChange}
                   />
                 </label>
@@ -106,6 +125,8 @@ class Inputs extends Component {
                     min="30"
                     max="240"
                     step="1"
+                    value={this.state.bpmIn}
+                    onChange={this.onBpmChange}
                   />
                 </div>
                 <div className="uk-width-medium@s uk-margin-small-bottom">
@@ -187,6 +208,8 @@ class Inputs extends Component {
                     min="0"
                     max="2"
                     step="1"
+                    value={this.state.waveformIn}
+                    onChange={this.onWaveformChange}
                   />
                 </div>
                 <div className="uk-width-medium@s uk-margin-small-bottom">
@@ -195,17 +218,19 @@ class Inputs extends Component {
                       className="ukIcon uk-icon-button"
                       data-uk-icon="bolt"
                       data-uk-tooltip="Generate"
-                      onClick={this.onTextSubmit}
+                      onClick={this.onInputSubmit}
                     />
                     <button
                       className="ukIcon uk-icon-button icon-toggle"
                       data-uk-icon="play"
                       data-uk-tooltip="Play"
+                      onClick={this.onInputSubmit}
                     />
                     <button
                       className="ukIcon uk-icon-button"
                       data-uk-icon="refresh"
                       data-uk-tooltip="Refresh"
+                      onClick={this.resetStates}
                     />
                   </div>
                 </div>

@@ -14,10 +14,12 @@
         }
     }
     .uk-range{
-        background: var(--mo-grey);
-
-        &:focus{
-            color:var(--mo-indigo);
+        &::-webkit-slider-thumb:active {
+            background: var(--mo-indigo);
         }
+        &::-webkit-slider-runnable-track:active {
+            background: var(--mo-grey);
     }
+    
+}
 }
