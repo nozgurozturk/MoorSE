@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import UIkit from "uikit";
+import Tone from "tone";
 
 class Inputs extends Component {
   componentDidMount() {
@@ -10,10 +11,7 @@ class Inputs extends Component {
   constructor(props) {
     super(props);
     this.state = { textIn: "", bpmIn: "", waveformIn: "" };
-    this.baseState = this.state 
-  }
-  resetStates = () =>{
-    this.setState(this.baseState);
+    this.baseState = this.state;
   }
 
   onBpmChange = e => {
@@ -34,13 +32,18 @@ class Inputs extends Component {
   onWaveformSubmit = () => {
     this.props.onWaveform(this.state.waveformIn);
   };
-  onInputSubmit = (e) =>{
+  onInputSubmit = e => {
     e.preventDefault();
     this.onBpmSubmit();
     this.onWaveformSubmit();
     this.onTextSubmit();
-  }
+  };
 
+  stopMusic = (e) => {
+    e.preventDefault();
+    Tone.Transport.cancel();
+    this.setState(this.baseState);
+  };
 
   render() {
     return (
@@ -213,13 +216,7 @@ class Inputs extends Component {
                   />
                 </div>
                 <div className="uk-width-medium@s uk-margin-small-bottom">
-                  <div className="uk-child-width-1-4 uk-flex uk-flex-between ">
-                    <button
-                      className="ukIcon uk-icon-button"
-                      data-uk-icon="bolt"
-                      data-uk-tooltip="Generate"
-                      onClick={this.onInputSubmit}
-                    />
+                  <div className="uk-child-width-1-3 uk-flex uk-flex-between ">
                     <button
                       className="ukIcon uk-icon-button icon-toggle"
                       data-uk-icon="play"
@@ -230,7 +227,7 @@ class Inputs extends Component {
                       className="ukIcon uk-icon-button"
                       data-uk-icon="refresh"
                       data-uk-tooltip="Refresh"
-                      onClick={this.resetStates}
+                      onClick={this.stopMusic}
                     />
                   </div>
                 </div>
